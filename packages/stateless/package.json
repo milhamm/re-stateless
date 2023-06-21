@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ramda": "^0.29.2",
+    "invariant": "^2.2.4",
     "typescript": "^5.0.2"
   },
   "dependencies": {

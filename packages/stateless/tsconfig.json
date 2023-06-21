@@ -3,9 +3,11 @@
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "ESNext",
+    "module": "CommonJS",
+    "target": "ES2016",
+    "moduleResolution": "Node",
     "outDir": "./dist"
   },
   "include": ["."],
-  "exclude": ["dist", "node_modules", "**/*.spec.ts"]
+  "exclude": ["dist", "node_modules", "**/*.spec.ts", "**/playground.ts"]
 }
