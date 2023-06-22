@@ -17,6 +17,7 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
+    "hyperid": "^3.1.1",
     "ramda": "^0.29.0",
     "ramda-adjunct": "^4.0.0",
     "rxjs": "^7.8.1"

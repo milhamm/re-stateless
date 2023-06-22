@@ -1,29 +1,16 @@
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, never } from "rxjs";
 import { mergeDeepRight } from "ramda";
 import { isFunction } from "ramda-adjunct";
 import invariant from "invariant";
 
-import { createState } from "./createState.js";
+import { createState } from "./createState";
+import { bindDecorators } from "./bindDecorators";
+import { Module, Config, State, Decorator } from "./types";
 
-type Config<T extends object> = {
-  name: string;
-  initialState: T;
-  decorators: Record<string, unknown>;
-};
-
-type Module<T> = {
-  name: string;
-  getState: () => T;
-  setState: (stateModifier: any, mergeFunction) => void;
-  state$: BehaviorSubject<T>;
-  subscribe: (cb: (incomingState: T) => void) => void;
-};
-
-function createModule<T extends object>({
-  name,
-  initialState,
-  decorators,
-}: Config<T>): Module<T> {
+function createModule<
+  T extends State,
+  D extends Record<string, Decorator<T, any[], any>>
+>({ name, initialState, decorators }: Config<T, D>): Module<T, D> {
   invariant(
     typeof initialState !== "object",
     "Initial state for a module must be an `object`, got a `%s` instead",
@@ -37,10 +24,7 @@ function createModule<T extends object>({
     return state;
   };
 
-  const setState = (
-    stateModifier: T | ((prevState: T) => T),
-    mergeFunction = mergeDeepRight
-  ) => {
+  const setState = (stateModifier, mergeFunction = mergeDeepRight) => {
     const incomingState: any = isFunction(stateModifier)
       ? stateModifier(state)
       : stateModifier;
@@ -57,8 +41,9 @@ function createModule<T extends object>({
   };
 
   const module = { name, getState, setState, state$, subscribe };
+  bindDecorators(module, decorators);
 
-  return module;
+  return module as Module<T, typeof decorators>;
 }
 
 export { createModule };
