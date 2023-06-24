@@ -1,12 +1,15 @@
-import hyperid from "hyperid";
 import { BehaviorSubject, Observable } from "rxjs";
+import { EFFECT } from "./core/lib/constants";
+
+type ValueOf<T> = T[keyof T];
 
 export type State = object;
+export type EffectState = ValueOf<typeof EFFECT.STATUS>;
 
 export type Decorator<T, TArgs extends any[] = any[], TResult = any> = (
   instance: Module<T>,
   helpers: unknown
-) => (id?: string | null, ...args: TArgs) => TResult;
+) => (id: string | null, ...args: TArgs) => TResult;
 
 type DecoratorObject<T> = {
   [key: string]: Decorator<T>;
@@ -24,7 +27,17 @@ export type Config<T extends State, TDecorators extends DecoratorObject<T>> = {
 
 export type Mutable<T> =
   | { -readonly [K in keyof Partial<T>]: any }
-  | { "@effectState": unknown };
+  | {
+      "@effectState":
+        | {
+            [key: string]: {
+              status: EffectState;
+            };
+          }
+        | {
+            status: EffectState;
+          };
+    };
 
 export type StateModifier<T> = Mutable<T> | ((prevState: T) => Mutable<T>);
 
