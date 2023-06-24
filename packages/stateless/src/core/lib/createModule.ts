@@ -5,7 +5,7 @@ import invariant from "invariant";
 
 import { createState } from "./createState";
 import { bindDecorators } from "./bindDecorators";
-import { Module, Config, State, Decorator } from "./types";
+import { Module, Config, State, Decorator } from "../../types";
 
 function createModule<
   T extends State,

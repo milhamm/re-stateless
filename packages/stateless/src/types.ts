@@ -6,16 +6,17 @@ export type State = object;
 export type Decorator<T, TArgs extends any[] = any[], TResult = any> = (
   instance: Module<T>,
   helpers: unknown
-) => (id: string, ...args: TArgs) => TResult;
+) => (id?: string | null, ...args: TArgs) => TResult;
 
-export type ManagedDecorators<
-  D extends Record<string, Decorator<TModule>>,
-  TModule = unknown
-> = {
+type DecoratorObject<T> = {
+  [key: string]: Decorator<T>;
+};
+
+export type ManagedDecorators<D extends DecoratorObject<unknown>> = {
   [K in keyof D]: ReturnType<D[K]>;
 };
 
-export type Config<T extends State, TDecorators> = {
+export type Config<T extends State, TDecorators extends DecoratorObject<T>> = {
   name: string;
   initialState: T;
   decorators: TDecorators;
@@ -32,7 +33,7 @@ export type BehaviorSubjectState<T> = BehaviorSubject<T> & {
   "@parentId": hyperid.Instance;
 };
 
-export type Module<T, D extends Record<string, Decorator<T>> = {}> = {
+export type Module<T, D extends DecoratorObject<unknown> = {}> = {
   name: string;
   getState: () => T;
   setState: (stateModifier: StateModifier<T>, mergeFunction?) => void;
