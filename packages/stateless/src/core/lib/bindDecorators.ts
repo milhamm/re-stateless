@@ -1,8 +1,9 @@
 import { isNotNil, toPairs } from "ramda";
 
+import type { Module } from "../../types";
+
 import { EFFECT } from "./constants";
 import { createManagedDecorator } from "./createManagedDecorator";
-import type { Module } from "./types";
 
 function bindDecorators<T>(instance: Module<T>, decorators) {
   for (const [key, decorator] of toPairs(decorators)) {

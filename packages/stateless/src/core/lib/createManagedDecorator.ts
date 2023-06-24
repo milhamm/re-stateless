@@ -2,8 +2,9 @@ import { pathOr } from "ramda";
 import { isNotNil, isPromise } from "ramda-adjunct";
 import invariant from "invariant";
 
+import { Module } from "../../types";
+
 import { EFFECT } from "./constants";
-import { Module } from "./types";
 
 const { PENDING, FULFILLED, REJECTED } = EFFECT.STATUS;
 

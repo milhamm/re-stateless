@@ -1,1 +1,1 @@
-export * from "./createModule";
+export * from "./lib/createModule";
