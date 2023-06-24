@@ -1,5 +1,5 @@
 import hyperid from "hyperid";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 export type State = object;
 
@@ -28,11 +28,6 @@ export type Mutable<T> =
 
 export type StateModifier<T> = Mutable<T> | ((prevState: T) => Mutable<T>);
 
-export type BehaviorSubjectState<T> = BehaviorSubject<T> & {
-  "@id": hyperid.Instance;
-  "@parentId": hyperid.Instance;
-};
-
 export type Module<T, D extends DecoratorObject<unknown> = {}> = {
   name: string;
   getState: () => T;
@@ -40,3 +35,16 @@ export type Module<T, D extends DecoratorObject<unknown> = {}> = {
   state$: BehaviorSubject<T>;
   subscribe: (cb: (incomingState: T) => void) => void;
 } & ManagedDecorators<D>;
+
+export type SourceArgs<T> = {
+  [K in keyof T]: T[K] extends Observable<infer R> ? R : never;
+};
+
+export type ProjectionFn<TArgs extends Observable<unknown>[], TReturn> = (
+  ...args: SourceArgs<TArgs>
+) => TReturn;
+
+export type Mapped<T> = { id: string; value: T };
+export type MappedObservable<T> = Observable<Mapped<T>>;
+
+export type PredicateFn = (output: number) => boolean;

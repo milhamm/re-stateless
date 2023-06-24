@@ -1,15 +1,15 @@
 import { BehaviorSubject } from "rxjs";
 
+import { getUniqueId } from "../../utils";
+
 import { attachParentId } from "./attachParentId";
 import { attachUniqueId } from "./attachUniqueId";
-import { getUniqueId } from "./utils";
-import { BehaviorSubjectState } from "./types";
 
-function createState<T>(initialState: T): BehaviorSubjectState<T> {
+function createState<T>(initialState: T) {
   const state$ = new BehaviorSubject(initialState);
   attachUniqueId(state$);
   attachParentId(state$, getUniqueId());
-  return state$ as BehaviorSubjectState<T>;
+  return state$;
 }
 
 export { createState };

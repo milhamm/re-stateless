@@ -1,7 +1,7 @@
 import hyperid from "hyperid";
-import { BehaviorSubject } from "rxjs";
+import { Observable } from "rxjs";
 
-function attachParentId<T>(state: BehaviorSubject<T>, id: hyperid.Instance) {
+function attachParentId<T>(state: Observable<T>, id: hyperid.Instance) {
   state["@parentId"] = id;
 }
 

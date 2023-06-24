@@ -1,4 +1,3 @@
-import { BehaviorSubject, never } from "rxjs";
 import { mergeDeepRight } from "ramda";
 import { isFunction } from "ramda-adjunct";
 import invariant from "invariant";
