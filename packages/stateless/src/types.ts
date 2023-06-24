@@ -40,7 +40,7 @@ export type SourceArgs<T> = {
   [K in keyof T]: T[K] extends Observable<infer R> ? R : never;
 };
 
-export type ProjectionFn<TArgs extends Observable<unknown>[], TReturn> = (
+export type ProjectionFn<TArgs extends unknown[], TReturn> = (
   ...args: SourceArgs<TArgs>
 ) => TReturn;
 

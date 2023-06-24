@@ -32,9 +32,9 @@ const propParentId = prop("@parentId");
 
 export function select<
   TResult,
-  TSource extends Observable<any>[],
+  TSource extends Observable<unknown>[],
   TLast extends ProjectionFn<TSource, any>
->(...args: [...TSource, TLast]): Observable<TResult> {
+>(...args: [...TSource, TLast]): Observable<ReturnType<TLast>> {
   const sources = init(args) as TSource;
   const projection = last(args) as TLast;
 
@@ -52,7 +52,7 @@ export function select<
     flattenIf((outputLength) => outputLength !== sources.length),
     deriveOrderedResult(parameterOrderBySourceId),
     // @ts-ignore
-    rMap<Mapped<unknown>[], TResult>((result) => test(...result)),
+    rMap((result) => test(...result)),
     shareReplay(1)
   );
 
@@ -67,7 +67,7 @@ export function select<
     : getUniqueId();
   attachUniqueId(selected$);
   attachParentId(selected$, parentId);
-  return selected$;
+  return selected$ as Observable<ReturnType<TLast>>;
 }
 
 function zippingPipeline<T>(sources: Observable<T>[]): MappedObservable<T>[] {
