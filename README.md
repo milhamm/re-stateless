@@ -68,6 +68,28 @@ const count$ = select(state$, (state) => state.count);
 export { count$ };
 ```
 
+We can also derived the data from multiple observers. See the usage:
+```ts
+const { state$ } = authModule;
+const { state$: counterState$ } = counterModule;
+
+const combineState$ = select(
+  state$,
+  counterState$,
+  (authState, counterState) => ({
+    fullName: `${authState.firstName} ${authState.lastName}`,
+    counter: counterState.count * 2,
+  })
+);
+
+type CombineState = typeof combineState$
+//    ^? const combineState$: Observable<{
+//     fullName: string;
+//     age: number;
+// }>
+
+```
+
 ### Binding to a React component via props
 To bind the observables to your React components, the library provides a connect function, which is a higher-order component (HOC) similar to the connect function in Redux. The connect function allows you to map the observable values into props for your components.
 
@@ -91,6 +113,24 @@ const ConnectedApp = connect(() => ({
 
 export default ConnectedApp;
 ```
+
+## Type support
+As this is my attempt to add types to the library. 
+
+### Module
+To enhance the type support within the module, we have added typings that allow us to access the properties and managed decorators.
+
+<div align="center">
+  <img src="https://github.com/milhamm/restate-rx/assets/35242329/afb0e06e-3458-4651-9e64-1d24f7267ea5" height="350">
+</div>
+
+### Selectors
+By adding type support to the selectors, we're able to infer the observable type based on the derivation logic. This enhances the type safety and provides accurate type information for the derived values.
+
+<div align="center">
+  <img src="https://github.com/milhamm/restate-rx/assets/35242329/908fe2ea-4b50-4d35-b4ea-0975c7adbd19" height="250">
+</div>
+
 
 ## Behind the scene
 This library uses [RxJS](https://rxjs.dev/)
