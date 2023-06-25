@@ -3,7 +3,7 @@
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "CommonJS",
+    "module": "ES2020",
     "target": "ES2016",
     "moduleResolution": "Node",
     "outDir": "./dist"
