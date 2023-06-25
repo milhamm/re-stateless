@@ -16,15 +16,21 @@ import {
 } from "rxjs";
 
 function connect(
-  deriveSourceMapping: () => Record<string, BehaviorSubject<unknown>>,
+  deriveSourceMapping: () => Record<string, Observable<unknown>>,
   options = { forwardRef: false }
 ) {
-  return function withModule(
-    Component: FunctionComponent,
+  return function withModule<T>(
+    Component: React.FC<T>,
     propsAreEqual = equals
   ) {
     const MemoizedComponent = memo(Component, propsAreEqual);
-    function ConnectedComponent({ forwardedConnectRef, ...ownProps }) {
+    function ConnectedComponent({
+      forwardedConnectRef,
+      ...ownProps
+    }: {
+      forwardedConnectRef?: unknown;
+      [x: string]: any;
+    }) {
       const [moduleProps, setModuleProps] = useState();
       useEffect(() => {
         const sourceMapping = safelyDeriveSourceMapping(
@@ -66,7 +72,7 @@ function connect(
 
       return createElement(
         MemoizedComponent,
-        Object.assign({}, moduleProps, ownProps, { ref: forwardedConnectRef })
+        Object.assign({}, moduleProps, ownProps)
       );
     }
 

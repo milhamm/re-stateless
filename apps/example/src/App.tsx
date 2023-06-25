@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { add } from "stateless";
+import { connect } from "stateless";
+
+import { Counter, counterModule } from "./modules/counter/module";
+import { count$ } from "./modules/counter/selectors";
+
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-  const addedCount = add(count, 2);
-
+const App: React.FC<Counter> = ({ count }) => {
   return (
     <>
       <div>
@@ -20,8 +20,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {addedCount}
+        <button onClick={() => counterModule.addCount()}>
+          count is {count}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -32,6 +32,10 @@ function App() {
       </p>
     </>
   );
-}
+};
 
-export default App;
+const ConnectedApp = connect(() => ({
+  count: count$,
+}))(App);
+
+export default ConnectedApp;

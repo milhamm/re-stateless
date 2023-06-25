@@ -11,7 +11,7 @@ function createModule<
   D extends Record<string, Decorator<T, any[], any>>
 >({ name, initialState, decorators }: Config<T, D>): Module<T, D> {
   invariant(
-    typeof initialState !== "object",
+    typeof initialState === "object",
     "Initial state for a module must be an `object`, got a `%s` instead",
     typeof initialState
   );
