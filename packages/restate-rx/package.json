@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "stateless",
+  "name": "restate-rx",
   "version": "1.0.0",
-  "description": "Recreating Stateless State Manager",
+  "description": "Rxjs react state manager",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

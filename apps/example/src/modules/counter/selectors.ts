@@ -1,4 +1,4 @@
-import { select } from "stateless";
+import { select } from "restate-rx";
 import { counterModule } from "./module";
 
 const { state$ } = counterModule;

@@ -1,4 +1,4 @@
-import { connect } from "stateless";
+import { connect } from "restate-rx";
 
 import { Counter, counterModule } from "./modules/counter/module";
 import { count$ } from "./modules/counter/selectors";

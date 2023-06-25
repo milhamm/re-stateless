@@ -1,4 +1,4 @@
-import { createModule } from "stateless";
+import { createModule } from "restate-rx";
 
 export type Counter = {
   count: number;
