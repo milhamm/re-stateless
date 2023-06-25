@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .: {}
@@ -49,6 +53,9 @@ importers:
 
   packages/stateless:
     dependencies:
+      '@types/react':
+        specifier: ^18.0.37
+        version: 18.0.37
       hyperid:
         specifier: ^3.1.1
         version: 3.1.1
@@ -61,6 +68,9 @@ importers:
       ramda-adjunct:
         specifier: ^4.0.0
         version: 4.0.0(ramda@0.29.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -471,7 +481,6 @@ packages:
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/ramda@0.29.2:
     resolution: {integrity: sha512-JxvBGR3G4gV3RTOBugVHAAOD6iiv2WjlJ8BHr0s7KALdPpx2l+didoTuoJMmrA0eqpUaCm/slKP4TmxMRihd8g==}
@@ -491,11 +500,9 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
-    dev: true
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
-    dev: true
 
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
@@ -743,7 +750,6 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: true
 
   /debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}

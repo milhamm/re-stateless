@@ -8,7 +8,11 @@ import { EFFECT } from "./constants";
 
 const { PENDING, FULFILLED, REJECTED } = EFFECT.STATUS;
 
-function createManagedDecorator<T>(instance: Module<T>, effectKey, effect) {
+function createManagedDecorator<T>(
+  instance: Module<T>,
+  effectKey: string,
+  effect
+) {
   return function managedDecorator(id: string, ...args: unknown[]) {
     if (isNotNil(id)) {
       invariant(
@@ -23,7 +27,7 @@ function createManagedDecorator<T>(instance: Module<T>, effectKey, effect) {
 
     const setStatus = (status) => {
       instance.setState({
-        [EFFECT.STATE_NAMESPACE]: {
+        "@effectState": {
           [effectKey]: isNotNil(id)
             ? {
                 [id]: {

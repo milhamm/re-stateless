@@ -25,26 +25,47 @@ export type Config<T extends State, TDecorators extends DecoratorObject<T>> = {
   decorators: TDecorators;
 };
 
-export type Mutable<T> =
-  | { -readonly [K in keyof Partial<T>]: any }
-  | {
-      "@effectState":
-        | {
-            [key: string]: {
-              status: EffectState;
-            };
-          }
-        | {
-            status: EffectState;
-          };
-    };
+type ErrorBundle = {
+  error: Error;
+  __handled: boolean;
+};
 
-export type StateModifier<T> = Mutable<T> | ((prevState: T) => Mutable<T>);
+type Effect = {
+  status: EffectState;
+};
+
+type EffectWithID = {
+  [id: string]: Effect;
+};
+
+type EffectError = ErrorBundle;
+
+type EffectErrorWithID = {
+  [id: string]: EffectError;
+};
+
+type EffectStateModifier = {
+  [EFFECT.STATE_NAMESPACE]: {
+    [effectKey: string]:
+      | Effect
+      | EffectWithID
+      | EffectError
+      | EffectErrorWithID;
+  };
+};
+
+type StateMutable<T> = { -readonly [K in keyof Partial<T>]: any };
+
+type StateModifierObject<T> = StateMutable<T> | EffectStateModifier;
+
+export type StateModifierHandler<T> =
+  | StateModifierObject<T>
+  | ((prevState: T) => StateModifierObject<T>);
 
 export type Module<T, D extends DecoratorObject<unknown> = {}> = {
   name: string;
   getState: () => T;
-  setState: (stateModifier: StateModifier<T>, mergeFunction?) => void;
+  setState: (stateModifier: StateModifierHandler<T>, mergeFunction?) => void;
   state$: BehaviorSubject<T>;
   subscribe: (cb: (incomingState: T) => void) => void;
 } & ManagedDecorators<D>;
