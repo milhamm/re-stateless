@@ -114,6 +114,8 @@ const ConnectedApp = connect(() => ({
 export default ConnectedApp;
 ```
 
+See [Example](https://github.com/milhamm/restate-rx/tree/main/apps/example/src)
+
 ## Type support
 As this is my attempt to add types to the library. 
 
